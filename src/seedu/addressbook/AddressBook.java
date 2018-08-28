@@ -308,8 +308,8 @@ public class AddressBook {
 
     /**
      * Returns true if the given file path is valid.
-     * A file path is valid if it has a valid parent directory as determined by {@link #hasValidParentDirectory}
-     * and a valid file name as determined by {@link #hasValidFileName}.
+     * A file path is valid if it has a valid parent directory as determined by {@link #isValidParentDirectory}
+     * and a valid file name as determined by {@link #isValidFileName}.
      */
     private static boolean isValidFilePath(String filePath) {
         if (filePath == null) {
@@ -321,13 +321,13 @@ public class AddressBook {
         } catch (InvalidPathException ipe) {
             return false;
         }
-        return hasValidParentDirectory(filePathToValidate) && hasValidFileName(filePathToValidate);
+        return isValidParentDirectory(filePathToValidate) && isValidFileName(filePathToValidate);
     }
 
     /**
      * Returns true if the file path has a parent directory that exists.
      */
-    private static boolean hasValidParentDirectory(Path filePath) {
+    private static boolean isValidParentDirectory(Path filePath) {
         Path parentDirectory = filePath.getParent();
         return parentDirectory == null || Files.isDirectory(parentDirectory);
     }
@@ -338,7 +338,7 @@ public class AddressBook {
      * Reserved characters are OS-dependent.
      * If a file already exists, it must be a regular file.
      */
-    private static boolean hasValidFileName(Path filePath) {
+    private static boolean isValidFileName(Path filePath) {
         return filePath.getFileName().toString().lastIndexOf('.') > 0
                 && (!Files.exists(filePath) || Files.isRegularFile(filePath));
     }
